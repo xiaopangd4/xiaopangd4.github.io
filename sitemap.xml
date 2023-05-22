@@ -65,7 +65,14 @@
 
   
   <url>
-    <loc>http://example.com/tags/Revise/</loc>
+    <loc>http://example.com/tags/FormatString/</loc>
+    <lastmod>2023-05-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>http://example.com/tags/Pwn/</loc>
     <lastmod>2023-05-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
