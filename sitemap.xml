@@ -81,7 +81,7 @@
   </url>
   
   <url>
-    <loc>http://example.com/categories/Pwn/Test/</loc>
+    <loc>http://example.com/categories/Pwn/FormatString/</loc>
     <lastmod>2023-05-22</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
