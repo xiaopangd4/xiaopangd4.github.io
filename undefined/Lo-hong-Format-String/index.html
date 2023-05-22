@@ -362,11 +362,11 @@
             <!-- WordCount start -->
             <div class="blank_box"></div>
             <span class="meta">
-              Estimated Reading Time <span class="post-count">1</span> Minutes
+              Estimated Reading Time <span class="post-count">5</span> Minutes
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">304</span> In Total
+              Words <span class="post-count">923</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -434,14 +434,58 @@ Lưu ý: Trong chuỗi blog này, mình sẽ demo trên hệ điều hành Unix 
 <blockquote>
 <p><em>Hello, mình là Cute Panda!</em></p>
 </blockquote>
-<h2 id="Vi-du">Ví dụ</h2>
-<p>Trong một vài trường hợp, chúng là sẽ gặp những writeup như thế này.<br>
+<p><strong>Ví dụ</strong></p>
+<p>Trong một vài trường hợp, chúng là sẽ gặp những writeup như thế này. Hãy đọc hiểu chương trình trước khi tiếp tục.<br>
 <em>fmt.c:</em></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ignore</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">vuln</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ignore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">setvbuf</span>(stdout, <span class="literal">NULL</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">	<span class="built_in">setvbuf</span>(stdin, <span class="literal">NULL</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">setvbuf</span>(stderr, <span class="literal">NULL</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">vuln</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">char</span> flag[<span class="number">27</span>];</span><br><span class="line">	<span class="type">char</span> yourname[<span class="number">128</span>];</span><br><span class="line">	FILE *fp;</span><br><span class="line">	fp = <span class="built_in">fopen</span>(<span class="string">&quot;flag.txt&quot;</span>,<span class="string">&quot;r&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(fp == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;No file flag.txt&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">fgets</span>(flag,<span class="number">27</span>,fp);</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Input your name: &quot;</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%128s&quot;</span>,yourname);</span><br><span class="line">	<span class="built_in">printf</span>(yourname);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">ignore</span>();</span><br><span class="line">	<span class="built_in">vuln</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><em>Build:</em></p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o pandafmt fmt.c</span><br></pre></td></tr></table></figure>
-<p><em>Exploit:</em><br>
-<img src="Lo-hong-Format-String/vd_poc.png" alt="vd_poc"></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o pandafmt fmt.c</span><br></pre></td></tr></table></figure>
+<p><em>flag.txt:</em></p>
+<figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">cutepanda</span><span class="template-variable">&#123;flag&#125;</span></span><br></pre></td></tr></table></figure>
+<p><em>Exploit:</em></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input your name: </span><br><span class="line">%8<span class="variable">$p</span>.%9<span class="variable">$p</span></span><br><span class="line">0x646e617065747563.0xa7d67616c667b61</span><br></pre></td></tr></table></figure>
+<p>Chúng ta có thể thấy giá trị <code>0x64 6e 61 70 65 74 75 63</code> và <code>0x0a 7d 67 61 6c 66 7b 61</code> khi chuyển sang giá trị ASCII là <code>cutepanda&#123;flag&#125;</code>. Đây chính là <code>flag</code> mà chúng ta cần tìm. Có thể sử dụng các công cụ online để chuyển đổi <a target="_blank" rel="noopener" href="https://kt.gy/tools.html#conv/">kt.gy</a> và công cụ mạnh hơn <a target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/">Cyber Chef</a>.<br>
+Như mình nói ban đầu, có thể mọi người đã làm được những bước như thế này, vấn đề giải thích kỹ tại sao lại như thế. Thì blog này dành cho bạn. Vì đây là blog đầu tiên của mình, nên mình sẽ tổng hợp các kiến thức khác đi kèm.<br>
+Let’s go…</p>
+<h2 id="Kien-truc">Kiến trúc</h2>
+<h3 id="32bit-vs-64bit">32bit vs 64bit</h3>
+<p>Hiện tại trong các kiến trúc có 32bit(x86) và 64bit(x64). Muốn hiểu rõ hơn các thành phần, các bạn có thể tìm hiểu <a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/computer_fundamentals/computer_components.htm">tại đây</a>. Đại loại, với mỗi hệ thống, thì bộ xử lý, bộ nhớ, các thành phần khác sẽ xử lý tương ứng trên các đơn vị 32bit hay 64bit.</p>
+<h3 id="Memory-Layout">Memory Layout</h3>
+<p>Chúng ta đều biết, máy tính chỉ hoạt động qua ngôn ngữ máy, các bit <code>0</code> <code>1</code>, vì vậy để máy tính hiểu được chương trình, cần có quá trình biên dịch (<code>compiler</code>) quá trình này sẽ chuyển từ ngôn ngữ bậc cao(dễ viết, dễ đọc, dễ hiểu, chỗ này mình hơi lấn cấn ^^) sang ngôn ngữ bậc thấp hơn(ngôn ngữ máy). Vậy thì chương trình C của chúng ta cũng có trình biên dịch như thế(C -&gt; Assembly -&gt; 0110), cho nên nó cần có các vùng nhớ để thực hiện điều đó.<br>
+Thông thường, bộ nhớ của chương trình C bao gồm các section sau:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">Segment</th>
+<th style="text-align:center">Ý nghĩa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">Text segment</td>
+<td style="text-align:center">.text chứa các đoạn mã lệnh chương trình</td>
+</tr>
+<tr>
+<td style="text-align:center">Initialized data segment</td>
+<td style="text-align:center">Chứa các biến global, static nếu các biến này được khởi tạo khác 0</td>
+</tr>
+<tr>
+<td style="text-align:center">Uninitialized data segment</td>
+<td style="text-align:center">.bss Chứa các biến global, static nếu không khai báo giá trị/hoặc gán giá trị bằng 0</td>
+</tr>
+<tr>
+<td style="text-align:center">Heap (Dynamic Memory Allocation)</td>
+<td style="text-align:center">Cấp phát, giải phóng bộ nhớ qua các hàm như malloc, calloc, free, delete, new,…</td>
+</tr>
+<tr>
+<td style="text-align:center">Stack (Automatic Variable Storage)</td>
+<td style="text-align:center">Vùng nhớ cấp phát tự động LIFO(Last In First Out)</td>
+</tr>
+</tbody>
+</table>
+<p>Và cuối cùng, trong các vùng nhớ, chúng ta có <code>địa chỉ</code> và <code>giá trị</code> tại địa chỉ đó.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a); <span class="comment">// = 0x658741 địa chỉ</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a); <span class="comment">// = 0 giá trị</span></span><br></pre></td></tr></table></figure>
+<p><em>Hôm nay hơi mệt, viết đến đây TT</em></p>
 
 
         <hr>
@@ -479,7 +523,7 @@ Lưu ý: Trong chuỗi blog này, mình sẽ demo trên hệ điều hành Unix 
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#TL-DR"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">TL;DR</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Vi-du"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Ví dụ</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#TL-DR"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">TL;DR</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Kien-truc"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Kiến trúc</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#32bit-vs-64bit"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">32bit vs 64bit</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Memory-Layout"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">Memory Layout</span></a></li></ol></li></ol>
         
         </div>
       </aside>
