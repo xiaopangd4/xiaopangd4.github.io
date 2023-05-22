@@ -366,7 +366,7 @@
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">15</span> In Total
+              Words <span class="post-count">304</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -428,7 +428,20 @@
       <!-- Post Container -->
       <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-        <p>Nơi đây sắp viết bài. Chưa có thời gian!</p>
+        <h2 id="TL-DR">TL;DR</h2>
+<p>Đây là bài viết đầu tiên trên blog của mình, qua quá trình view một số bài viết bằng Tiếng Việt về lỗ hổng này, mình thấy cảm thấy thiếu cho một người bắt đầu tìm hiểu về nó để khai thác các lỗi trong lập trình, chưa tổng hợp, hoặc các blog khác chỉ nói về cách khai thác, hoặc vì một lí do nào đó họ không chia sẻ. Qua chuỗi blog này, mình hi vọng sẽ cung cấp cho bạn đầy đủ về kỹ thuật Format string, dành cho người mới bắt đầu.<br>
+Lưu ý: Trong chuỗi blog này, mình sẽ demo trên hệ điều hành Unix [Ubuntu 20.04].</p>
+<blockquote>
+<p><em>Hello, mình là Cute Panda!</em></p>
+</blockquote>
+<h2 id="Vi-du">Ví dụ</h2>
+<p>Trong một vài trường hợp, chúng là sẽ gặp những writeup như thế này.<br>
+<em>fmt.c:</em></p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ignore</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">vuln</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ignore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">setvbuf</span>(stdout, <span class="literal">NULL</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">	<span class="built_in">setvbuf</span>(stdin, <span class="literal">NULL</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">setvbuf</span>(stderr, <span class="literal">NULL</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">vuln</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">char</span> flag[<span class="number">27</span>];</span><br><span class="line">	<span class="type">char</span> yourname[<span class="number">128</span>];</span><br><span class="line">	FILE *fp;</span><br><span class="line">	fp = <span class="built_in">fopen</span>(<span class="string">&quot;flag.txt&quot;</span>,<span class="string">&quot;r&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(fp == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;No file flag.txt&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">fgets</span>(flag,<span class="number">27</span>,fp);</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Input your name: &quot;</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%128s&quot;</span>,yourname);</span><br><span class="line">	<span class="built_in">printf</span>(yourname);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">ignore</span>();</span><br><span class="line">	<span class="built_in">vuln</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><em>Build:</em></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o pandafmt fmt.c</span><br></pre></td></tr></table></figure>
+<p><em>Exploit:</em><br>
+<img src="Lo-hong-Format-String/vd_poc.png" alt="vd_poc"></p>
 
 
         <hr>
@@ -466,7 +479,7 @@
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="nav">none</ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#TL-DR"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">TL;DR</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Vi-du"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Ví dụ</span></a></li></ol>
         
         </div>
       </aside>
@@ -631,7 +644,7 @@
 
   
     <!-- Mouseclick -->
-    <script type="text/javascript" src="/js/mouseclick.js" content='' color='#9933CC,#339933,#66CCCC,#FF99CC,#CCCCFF,#6666CC,#663399,#66CC99,#FF0033'></script>
+    <script type="text/javascript" src="/js/mouseclick.js" content='Panda fat,Panda cute,Ec ec :&lt;' color='#9933CC,#339933,#66CCCC,#FF99CC,#CCCCFF,#6666CC,#663399,#66CC99,#FF0033'></script>
   
 
   
