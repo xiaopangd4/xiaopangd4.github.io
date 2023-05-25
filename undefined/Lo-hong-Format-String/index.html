@@ -495,7 +495,7 @@ Thông thường, bộ nhớ của chương trình C bao gồm các section sau:
 <p>Trong chương trình sẽ có nhiều hàm khác nhau, mỗi phân vùng được cấp cho một hàm, khi hàm chưa kết thúc, và hàm giữ liên tục phân vùng này trên stack thì gọi là StackFrame.</p>
 <p><strong><em>x86</em></strong><br>
 Trong hệ điều hành 32bit, StackFrame khi một function được gọi sẽ như sau</p>
-<p>[Highadress]<br>
+<p>[Highaddress]<br>
 […]<br>
 [ebp + 16] (3rd function argument)<br>
 [ebp + 12] (2nd argument)<br>
@@ -505,13 +505,13 @@ Trong hệ điều hành 32bit, StackFrame khi một function được gọi s�
 [ebp - 4]  (1st local variable)<br>
 [ebp - 8]  (2st local variable)<br>
 […]<br>
-[Lowadress]</p>
+[Lowaddress]</p>
 <p><em>Oops:</em><br>
 <em>- Argument là đối số khi được gọi hàm, Parameter là tham số của hàm khi định nghĩa hàm</em><br>
 <em>- Trong hệ điều hành 32bit thì các tham số của hàm được cấp phát nằm năm phía trên EBP</em></p>
 <p><strong><em>x64</em></strong><br>
 Hơi khác với 32bit, kiến trúc 64bit 6 con con trỏ tham số sẽ được lưu trữ lần lượt trong các thanh ghi <em>RDI, DSI, RDX, RCX, R8 và R9</em>, nếu có thêm các tham số thì sẽ được lưu trên stack.</p>
-<p>[Highadress]<br>
+<p>[Highaddress]<br>
 […]<br>
 [rbp + 16] (maybe 9th function argument)<br>
 [rbp + 12] (maybe 8th argument)<br>
@@ -521,7 +521,7 @@ Hơi khác với 32bit, kiến trúc 64bit 6 con con trỏ tham số sẽ đư�
 [rbp - 4]  (1st local variable)<br>
 [rbp - 8]  (2st local variable)<br>
 […]<br>
-[Lowadress]</p>
+[Lowaddress]</p>
 <h2 id="FormatString-Vulnerablility">FormatString Vulnerablility</h2>
 <h3 id="Intro">Intro</h3>
 <p>Lỗi format string là một lỗi nguy hiểm không thua gì lỗi tràn bộ đệm. Khi một chương trình có lỗi này, hacker có thể leak dữ liệu, làm crash chương trình, và thậm chí là khai thác chạy các chương trình độc hại.<br>
