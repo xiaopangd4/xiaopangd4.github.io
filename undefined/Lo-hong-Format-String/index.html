@@ -451,7 +451,7 @@ Như mình nói ban đầu, có thể mọi người đã làm được những 
 Let’s go…</p>
 <h2 id="Architecture">Architecture</h2>
 <h3 id="32bit-vs-64bit">32bit vs 64bit</h3>
-<p>Hiện tại tronArchitectg các kiến trúc có 32bit(x86) và 64bit(x64). Muốn hiểu rõ hơn các thành phần, các bạn có thể tìm hiểu <a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/computer_fundamentals/computer_components.htm">tại đây</a>. Đại loại, với mỗi hệ thống, thì bộ xử lý, bộ nhớ, các thành phần khác sẽ xử lý tương ứng trên các đơn vị 32bit hay 64bit.</p>
+<p>Hiện tại trong các kiến trúc có 32bit(x86) và 64bit(x64). Muốn hiểu rõ hơn các thành phần, các bạn có thể tìm hiểu <a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/computer_fundamentals/computer_components.htm">tại đây</a>. Đại loại, với mỗi hệ thống, thì bộ xử lý, bộ nhớ, các thành phần khác sẽ xử lý tương ứng trên các đơn vị 32bit hay 64bit.</p>
 <h3 id="Memory-Layout">Memory Layout</h3>
 <p>Chúng ta đều biết, máy tính chỉ hoạt động qua ngôn ngữ máy, các bit <code>0</code> <code>1</code>, vì vậy để máy tính hiểu được chương trình, cần có quá trình biên dịch (<code>compiler</code>) quá trình này sẽ chuyển từ ngôn ngữ bậc cao(dễ viết, dễ đọc, dễ hiểu, chỗ này mình hơi lấn cấn ^^) sang ngôn ngữ bậc thấp hơn(ngôn ngữ máy). Vậy thì chương trình C của chúng ta cũng có trình biên dịch như thế(C -&gt; Assembly -&gt; 0110), cho nên nó cần có các vùng nhớ để thực hiện điều đó.<br>
 Thông thường, bộ nhớ của chương trình C bao gồm các section sau:</p>
