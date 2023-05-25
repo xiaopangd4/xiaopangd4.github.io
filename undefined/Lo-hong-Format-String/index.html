@@ -364,11 +364,11 @@
             <!-- WordCount start -->
             <div class="blank_box"></div>
             <span class="meta">
-              Estimated Reading Time <span class="post-count">5</span> Minutes
+              Estimated Reading Time <span class="post-count">7</span> Minutes
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">923</span> In Total
+              Words <span class="post-count">1.2k</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -447,7 +447,7 @@ Lưu ý: Trong chuỗi blog này, mình sẽ demo trên hệ điều hành Unix 
 <p><em>Exploit:</em></p>
 <figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input your name: </span><br><span class="line">%8<span class="variable">$p</span>.%9<span class="variable">$p</span></span><br><span class="line">0x646e617065747563.0xa7d67616c667b61</span><br></pre></td></tr></table></figure>
 <p>Chúng ta có thể thấy giá trị <code>0x64 6e 61 70 65 74 75 63</code> và <code>0x0a 7d 67 61 6c 66 7b 61</code> khi chuyển sang giá trị ASCII là <code>cutepanda&#123;flag&#125;</code>. Đây chính là <code>flag</code> mà chúng ta cần tìm. Có thể sử dụng các công cụ online để chuyển đổi <a target="_blank" rel="noopener" href="https://kt.gy/tools.html#conv/">kt.gy</a> và công cụ mạnh hơn <a target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/">Cyber Chef</a>.<br>
-Như mình nói ban đầu, có thể mọi người đã làm được những bước như thế này, vấn đề giải thích kỹ tại sao lại như thế. Thì blog này dành cho bạn. Vì đây là blog đầu tiên của mình, nên mình sẽ tổng hợp các kiến thức khác đi kèm.<br>
+Như mình nói ban đầu, có thể mọi người đã làm được những bước như thế này, vấn đề giải thích kỹ tại sao lại như thế. Thì blog này dành cho bạn. Vì đây là blog đầu tiên của mình, không phải là lỗi Buffer Overflow, nên mình sẽ tổng hợp các kiến thức khác đi kèm.<br>
 Let’s go…</p>
 <h2 id="Kien-truc">Kiến trúc</h2>
 <h3 id="32bit-vs-64bit">32bit vs 64bit</h3>
@@ -469,7 +469,7 @@ Thông thường, bộ nhớ của chương trình C bao gồm các section sau:
 </tr>
 <tr>
 <td style="text-align:center">Initialized data segment</td>
-<td style="text-align:center">Chứa các biến global, static nếu các biến này được khởi tạo khác 0</td>
+<td style="text-align:center">.data Chứa các biến global, static nếu các biến này được khởi tạo khác 0</td>
 </tr>
 <tr>
 <td style="text-align:center">Uninitialized data segment</td>
@@ -485,8 +485,14 @@ Thông thường, bộ nhớ của chương trình C bao gồm các section sau:
 </tr>
 </tbody>
 </table>
+<p>Qúa trình phát triển bộ nhớ(gọi thêm hàm, khai báo, blabla,…) sẽ có chiều hướng phát triển trong memory như sau.</p>
+<p>Highaddress <img src="../../images/Program_memory_layout.pdf.jpg" alt=""> Lowaddress</p>
+<p>Stack sẽ cấp phát từ Highaddress -&gt; Lowaddress và Heap sẽ ngược lại từ Lowaddress -&gt; HighAddress</p>
 <p>Và cuối cùng, trong các vùng nhớ, chúng ta có <code>địa chỉ</code> và <code>giá trị</code> tại địa chỉ đó.</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a); <span class="comment">// = 0x658741 địa chỉ</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a); <span class="comment">// = 0 giá trị</span></span><br></pre></td></tr></table></figure>
+<h3 id="Function-call">Function call</h3>
+<p>Quá trình chương trình thực hiện, sẽ gọi các hàm liên tục (<code>call</code>), sau đó lại quay trở về tại thời điểm trước khi gọi hàm(<code>return</code>). Cùng nhìn lại <em>fmt.c</em> tại <code>main</code> chương trình gọi 2 hàm là <code>ignore</code> và <code>vuln</code>. Cái này ai từng thực hiện về lỗ hổng Buffer Overflow sẽ hiểu rõ. Đại khái nếu chương trình ở <code>main</code> khi chạy đoạn <code>ignore()</code> thì chương trình sẽ sử dụng lệnh <code>call hàm ignore</code>(giai đoạn này sẽ phải cấp phát một vùng nhớ để lưu các biến, EBP, return address,… và vùng nhớ này sẽ có địa chỉa thấp hơn vùng địa chỉ <code>main</code>) sau khi chạy xong hàm <code>ignore</code> thì chương trình phải về hàm <code>main</code> để thực hiện tiếp hàm <code>vuln</code>, giai đoạn trở về thông qua địa chỉ trả về <code>return address</code>.</p>
+<p><em>32bit</em></p>
 <p><em>Hôm nay hơi mệt, viết đến đây TT</em></p>
 
 
@@ -525,7 +531,7 @@ Thông thường, bộ nhớ của chương trình C bao gồm các section sau:
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#TL-DR"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">TL;DR</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Kien-truc"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Kiến trúc</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#32bit-vs-64bit"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">32bit vs 64bit</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Memory-Layout"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">Memory Layout</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#TL-DR"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">TL;DR</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Kien-truc"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Kiến trúc</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#32bit-vs-64bit"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">32bit vs 64bit</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Memory-Layout"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">Memory Layout</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Function-call"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">Function call</span></a></li></ol></li></ol>
         
         </div>
       </aside>

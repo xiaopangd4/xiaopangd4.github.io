@@ -58,7 +58,7 @@
 
   <url>
     <loc>http://example.com/</loc>
-    <lastmod>2023-05-22</lastmod>
+    <lastmod>2023-05-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -66,14 +66,14 @@
   
   <url>
     <loc>http://example.com/tags/FormatString/</loc>
-    <lastmod>2023-05-22</lastmod>
+    <lastmod>2023-05-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://example.com/tags/Pwn/</loc>
-    <lastmod>2023-05-22</lastmod>
+    <lastmod>2023-05-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
@@ -82,14 +82,14 @@
   
   <url>
     <loc>http://example.com/categories/Pwn/</loc>
-    <lastmod>2023-05-22</lastmod>
+    <lastmod>2023-05-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
   
   <url>
     <loc>http://example.com/categories/Pwn/FormatString/</loc>
-    <lastmod>2023-05-22</lastmod>
+    <lastmod>2023-05-25</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.2</priority>
   </url>
