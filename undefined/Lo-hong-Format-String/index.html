@@ -89,6 +89,11 @@
     
 
     
+      <!-- gitalk start -->
+      <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css"> -->
+      <link rel="stylesheet" href="/css/gitalk.css"/>
+      <!-- gitalk end -->
+    
   
 
   <!-- Custom Fonts -->
@@ -364,11 +369,11 @@
             <!-- WordCount start -->
             <div class="blank_box"></div>
             <span class="meta">
-              Estimated Reading Time <span class="post-count">15</span> Minutes
+              Estimated Reading Time <span class="post-count">16</span> Minutes
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">2.5k</span> In Total
+              Words <span class="post-count">2.6k</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -596,6 +601,9 @@ Ví dụ:</p>
 <li><strong>Ghi đè vào một địa chỉ tùy ý, nếu có quyền ghi.</strong></li>
 </ul>
 <h2 id="Exploit">Exploit</h2>
+<h3 id="Leakable-data">Leakable data</h3>
+<p>Như ví dụ đầu blog, khi chạy chương trình, <code>./pandafmt</code>, về đúng nguyên tắc của lập trình, chúng ta không thể đọc được nội dung của <code>flag.txt</code>. Tuy nhiên, chúng ta đã đọc được nội dung của <code>flag.txt</code> thông qua lỗ hổng FormatString. Vậy, nguyên lý nào khiến chúng ta có thể làm điều đó?</p>
+<p><em>Hôm nay hơi mệt, viết đến đây TT</em></p>
 <h2 id="Reference">Reference</h2>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/computer_fundamentals/computer_components.htm">Computer Components</a></li>
@@ -607,7 +615,6 @@ Ví dụ:</p>
 <li><a target="_blank" rel="noopener" href="https://www.bluemoon.com.vn/books/taose.pdf">Nghệ thuật tận dụng lỗi phần mềm</a></li>
 <li><a target="_blank" rel="noopener" href="https://ctf101.org/binary-exploitation/what-is-the-stack/">The Stack</a></li>
 </ul>
-<p><em>Hôm nay hơi mệt, viết đến đây TT</em></p>
 
 
         <hr>
@@ -624,6 +631,56 @@ Ví dụ:</p>
 
         <!-- comments start -->
         <!-- 1. gitalk comment -->
+
+  <!-- gitalk start -->
+  <!-- Docs:https://github.com/gitalk/gitalk/blob/master/readme-cn.md -->
+
+  <div id="gitalk-container"></div>
+
+  
+    <!-- <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.js"></script> -->
+    <script src="/js/comment/gitalk.js"></script>
+  
+
+  <script>
+    var gitalk = new Gitalk({
+      clientID: 'cd28a74fba63c344b2d6',
+      clientSecret: 'a75ded60ec13dbf4707ce34e9abae82dc6a93fa4',
+      repo: 'xiaopangd4.github.io',
+      owner: 'xiaopangd4',
+      admin: 'xiaopangd4',
+      id: 'Tue May 16 2023 18:33:35 GMT+0700', // Ensure uniqueness and length less than 50
+      distractionFreeMode: false, // Facebook-like distraction free mode
+      perPage: 10,
+      pagerDirection: 'last',
+      createIssueManually: true,
+      language: 'en',
+      proxy: 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token'
+    });
+    gitalk.render('gitalk-container');
+
+    var gtFolded = () => {
+      setTimeout(function () {
+        let markdownBody = document.getElementsByClassName("markdown-body");
+        let list = Array.from(markdownBody);
+        list.forEach(item => {
+          if (item.clientHeight > 250) {
+            item.classList.add('gt-comment-body-folded');
+            item.style.maxHeight = '250px';
+            item.title = 'Click to Expand';
+            item.onclick = function () {
+              item.classList.remove('gt-comment-body-folded');
+              item.style.maxHeight = '';
+              item.title = '';
+              item.onclick = null;
+            };
+          }
+        })
+      }, 800);
+    }
+  </script>
+
+  <!-- gitalk end -->
 
 
 <!-- 2. gitment comment -->
@@ -645,7 +702,7 @@ Ví dụ:</p>
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#TL-DR"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">TL;DR</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Architecture"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Architecture</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#32bit-vs-64bit"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">32bit vs 64bit</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Memory-Layout"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">Memory Layout</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Function-call"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">Function call</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#FormatString-Vulnerablility"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">FormatString Vulnerablility</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Intro"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Intro</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Impact"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">Impact</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Exploit"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Exploit</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Reference"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Reference</span></a></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#TL-DR"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">TL;DR</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Architecture"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Architecture</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#32bit-vs-64bit"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">32bit vs 64bit</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Memory-Layout"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">Memory Layout</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Function-call"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">Function call</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#FormatString-Vulnerablility"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">FormatString Vulnerablility</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Intro"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Intro</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Impact"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">Impact</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Exploit"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Exploit</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Leakable-data"><span class="toc-nav-number">4.1.</span> <span class="toc-nav-text">Leakable data</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Reference"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Reference</span></a></li></ol>
         
         </div>
       </aside>
