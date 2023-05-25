@@ -364,11 +364,11 @@
             <!-- WordCount start -->
             <div class="blank_box"></div>
             <span class="meta">
-              Estimated Reading Time <span class="post-count">7</span> Minutes
+              Estimated Reading Time <span class="post-count">15</span> Minutes
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">1.2k</span> In Total
+              Words <span class="post-count">2.5k</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -432,11 +432,11 @@
 
         <h2 id="TL-DR">TL;DR</h2>
 <p>Đây là bài viết đầu tiên trên blog của mình, qua quá trình view một số bài viết bằng Tiếng Việt về lỗ hổng này, mình thấy cảm thấy thiếu cho một người bắt đầu tìm hiểu về nó để khai thác các lỗi trong lập trình, chưa tổng hợp, hoặc các blog khác chỉ nói về cách khai thác, hoặc vì một lí do nào đó họ không chia sẻ. Qua chuỗi blog này, mình hi vọng sẽ cung cấp cho bạn đầy đủ về kỹ thuật Format string, dành cho người mới bắt đầu.<br>
-Lưu ý: Trong chuỗi blog này, mình sẽ demo trên hệ điều hành Unix [Ubuntu 20.04].</p>
+Lưu ý: Trong chuỗi blog này, mình sẽ demo trên lập trình C/C++, hệ điều hành Unix [Ubuntu 20.04]. Có thể một vài nội dung truyền tải sai/chưa đúng. Xin nhận góp ý thông qua Github.</p>
 <blockquote>
 <p><em>Hello, mình là Cute Panda!</em></p>
 </blockquote>
-<p><strong>Ví dụ</strong></p>
+<p><strong>Sample</strong></p>
 <p>Trong một vài trường hợp, chúng là sẽ gặp những writeup như thế này. Hãy đọc hiểu chương trình trước khi tiếp tục.<br>
 <em>fmt.c:</em></p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span><span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ignore</span><span class="params">()</span></span>;</span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">vuln</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">ignore</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	<span class="built_in">setvbuf</span>(stdout, <span class="literal">NULL</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">	<span class="built_in">setvbuf</span>(stdin, <span class="literal">NULL</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">setvbuf</span>(stderr, <span class="literal">NULL</span>, _IONBF, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">vuln</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="type">char</span> flag[<span class="number">27</span>];</span><br><span class="line">	<span class="type">char</span> yourname[<span class="number">128</span>];</span><br><span class="line">	FILE *fp;</span><br><span class="line">	fp = <span class="built_in">fopen</span>(<span class="string">&quot;flag.txt&quot;</span>,<span class="string">&quot;r&quot;</span>);</span><br><span class="line">	<span class="keyword">if</span>(fp == <span class="literal">NULL</span>)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="built_in">puts</span>(<span class="string">&quot;No file flag.txt&quot;</span>);</span><br><span class="line">		<span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">fgets</span>(flag,<span class="number">27</span>,fp);</span><br><span class="line">	<span class="built_in">puts</span>(<span class="string">&quot;Input your name: &quot;</span>);</span><br><span class="line">	<span class="built_in">scanf</span>(<span class="string">&quot;%128s&quot;</span>,yourname);</span><br><span class="line">	<span class="built_in">printf</span>(yourname);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">	<span class="built_in">ignore</span>();</span><br><span class="line">	<span class="built_in">vuln</span>();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -449,9 +449,9 @@ Lưu ý: Trong chuỗi blog này, mình sẽ demo trên hệ điều hành Unix 
 <p>Chúng ta có thể thấy giá trị <code>0x64 6e 61 70 65 74 75 63</code> và <code>0x0a 7d 67 61 6c 66 7b 61</code> khi chuyển sang giá trị ASCII là <code>cutepanda&#123;flag&#125;</code>. Đây chính là <code>flag</code> mà chúng ta cần tìm. Có thể sử dụng các công cụ online để chuyển đổi <a target="_blank" rel="noopener" href="https://kt.gy/tools.html#conv/">kt.gy</a> và công cụ mạnh hơn <a target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/">Cyber Chef</a>.<br>
 Như mình nói ban đầu, có thể mọi người đã làm được những bước như thế này, vấn đề giải thích kỹ tại sao lại như thế. Thì blog này dành cho bạn. Vì đây là blog đầu tiên của mình, không phải là lỗi Buffer Overflow, nên mình sẽ tổng hợp các kiến thức khác đi kèm.<br>
 Let’s go…</p>
-<h2 id="Kien-truc">Kiến trúc</h2>
+<h2 id="Architect">Architect</h2>
 <h3 id="32bit-vs-64bit">32bit vs 64bit</h3>
-<p>Hiện tại trong các kiến trúc có 32bit(x86) và 64bit(x64). Muốn hiểu rõ hơn các thành phần, các bạn có thể tìm hiểu <a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/computer_fundamentals/computer_components.htm">tại đây</a>. Đại loại, với mỗi hệ thống, thì bộ xử lý, bộ nhớ, các thành phần khác sẽ xử lý tương ứng trên các đơn vị 32bit hay 64bit.</p>
+<p>Hiện tại tronArchitectg các kiến trúc có 32bit(x86) và 64bit(x64). Muốn hiểu rõ hơn các thành phần, các bạn có thể tìm hiểu <a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/computer_fundamentals/computer_components.htm">tại đây</a>. Đại loại, với mỗi hệ thống, thì bộ xử lý, bộ nhớ, các thành phần khác sẽ xử lý tương ứng trên các đơn vị 32bit hay 64bit.</p>
 <h3 id="Memory-Layout">Memory Layout</h3>
 <p>Chúng ta đều biết, máy tính chỉ hoạt động qua ngôn ngữ máy, các bit <code>0</code> <code>1</code>, vì vậy để máy tính hiểu được chương trình, cần có quá trình biên dịch (<code>compiler</code>) quá trình này sẽ chuyển từ ngôn ngữ bậc cao(dễ viết, dễ đọc, dễ hiểu, chỗ này mình hơi lấn cấn ^^) sang ngôn ngữ bậc thấp hơn(ngôn ngữ máy). Vậy thì chương trình C của chúng ta cũng có trình biên dịch như thế(C -&gt; Assembly -&gt; 0110), cho nên nó cần có các vùng nhớ để thực hiện điều đó.<br>
 Thông thường, bộ nhớ của chương trình C bao gồm các section sau:</p>
@@ -492,7 +492,120 @@ Thông thường, bộ nhớ của chương trình C bao gồm các section sau:
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a); <span class="comment">// = 0x658741 địa chỉ</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a); <span class="comment">// = 0 giá trị</span></span><br></pre></td></tr></table></figure>
 <h3 id="Function-call">Function call</h3>
 <p>Quá trình chương trình thực hiện, sẽ gọi các hàm liên tục (<code>call</code>), sau đó lại quay trở về tại thời điểm trước khi gọi hàm(<code>return</code>). Cùng nhìn lại <em>fmt.c</em> tại <code>main</code> chương trình gọi 2 hàm là <code>ignore</code> và <code>vuln</code>. Cái này ai từng thực hiện về lỗ hổng Buffer Overflow sẽ hiểu rõ. Đại khái nếu chương trình ở <code>main</code> khi chạy đoạn <code>ignore()</code> thì chương trình sẽ sử dụng lệnh <code>call hàm ignore</code>(giai đoạn này sẽ phải cấp phát một vùng nhớ để lưu các biến, EBP, return address,… và vùng nhớ này sẽ có địa chỉa thấp hơn vùng địa chỉ <code>main</code>) sau khi chạy xong hàm <code>ignore</code> thì chương trình phải về hàm <code>main</code> để thực hiện tiếp hàm <code>vuln</code>, giai đoạn trở về thông qua địa chỉ trả về <code>return address</code>.</p>
-<p><em>32bit</em></p>
+<p>Trong chương trình sẽ có nhiều hàm khác nhau, mỗi phân vùng được cấp cho một hàm, khi hàm chưa kết thúc, và hàm giữ liên tục phân vùng này trên stack thì gọi là StackFrame.</p>
+<p><strong><em>x86</em></strong><br>
+Trong hệ điều hành 32bit, StackFrame khi một function được gọi sẽ như sau</p>
+<p>[Highadress]<br>
+[…]<br>
+[ebp + 16] (3rd function argument)<br>
+[ebp + 12] (2nd argument)<br>
+[ebp + 8]  (1st argument)<br>
+[ebp + 4]  (return address)<br>
+[ebp]      (old ebp value)<br>
+[ebp - 4]  (1st local variable)<br>
+[ebp - 8]  (2st local variable)<br>
+[…]<br>
+[Lowadress]</p>
+<p><em>Oops:</em><br>
+<em>- Argument là đối số khi được gọi hàm, Parameter là tham số của hàm khi định nghĩa hàm</em><br>
+<em>- Trong hệ điều hành 32bit thì các tham số của hàm được cấp phát nằm năm phía trên EBP</em></p>
+<p><strong><em>x64</em></strong><br>
+Hơi khác với 32bit, kiến trúc 64bit 6 con con trỏ tham số sẽ được lưu trữ lần lượt trong các thanh ghi <em>RDI, DSI, RDX, RCX, R8 và R9</em>, nếu có thêm các tham số thì sẽ được lưu trên stack.</p>
+<p>[Highadress]<br>
+[…]<br>
+[rbp + 16] (maybe 9th function argument)<br>
+[rbp + 12] (maybe 8th argument)<br>
+[rbp + 8]  (maybe 7th argument)<br>
+[rbp + 4]  (return address)<br>
+[rbp]      (old ebp value)<br>
+[rbp - 4]  (1st local variable)<br>
+[rbp - 8]  (2st local variable)<br>
+[…]<br>
+[Lowadress]</p>
+<h2 id="FormatString-Vulnerablility">FormatString Vulnerablility</h2>
+<h3 id="Intro">Intro</h3>
+<p>Lỗi format string là một lỗi nguy hiểm không thua gì lỗi tràn bộ đệm. Khi một chương trình có lỗi này, hacker có thể leak dữ liệu, làm crash chương trình, và thậm chí là khai thác chạy các chương trình độc hại.<br>
+Format string là chuỗi string để định dạng dữ liệu in ra trong các hàm <strong>printf, fprintf, sprintf, snprintf, vsprintf, vsnprintf vfprintf, vprintf,…</strong> sẽ sử dụng tham số thứ nhất là chuỗi định đạng.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line">    <span class="type">int</span> <span class="title function_">printf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">fprintf</span><span class="params">(FILE *stream, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">dprintf</span><span class="params">(<span class="type">int</span> fd, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">sprintf</span><span class="params">(<span class="type">char</span> *str, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">snprintf</span><span class="params">(<span class="type">char</span> *str, <span class="type">size_t</span> size, <span class="type">const</span> <span class="type">char</span> *format, ...)</span>;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdarg.h&gt;</span></span></span><br><span class="line">    <span class="type">int</span> <span class="title function_">vprintf</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *format, va_list ap)</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">vfprintf</span><span class="params">(FILE *stream, <span class="type">const</span> <span class="type">char</span> *format, va_list ap)</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">vdprintf</span><span class="params">(<span class="type">int</span> fd, <span class="type">const</span> <span class="type">char</span> *format, va_list ap)</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">vsprintf</span><span class="params">(<span class="type">char</span> *str, <span class="type">const</span> <span class="type">char</span> *format, va_list ap)</span>;</span><br><span class="line">    <span class="type">int</span> <span class="title function_">vsnprintf</span><span class="params">(<span class="type">char</span> *str, <span class="type">size_t</span> size, <span class="type">const</span> <span class="type">char</span> *format, va_list ap)</span>;</span><br></pre></td></tr></table></figure>
+<p>Trong chuỗi blog này, chúng ta sẽ mô phỏng trên hàm <code>printf</code></p>
+<p><em>Trước khi tiếp tục: stdin, stdout, stder là các con trỏ tiêu chuẩn cho việc input, output, và error output. Mặc địch, chuẩn input sẽ đọc dữ liệu từ bàn phím, chuẩn output và error output sẽ in ra màn hình</em></p>
+<p><code>int printf ( const char * format, ... );</code> sẽ ghi chuỗi được trỏ bởi <em>format</em> vào thanh ghi vào luồng <code>stdout</code> -&gt; có nghĩa là nó sẽ in ra màn hình ^^.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Hello cutepanda&quot;</span>); <span class="comment">//in ra màn hình cutepanda &lt;=&gt; * *format* = chuỗi &quot;Hello cutepanda&quot;</span></span><br></pre></td></tr></table></figure>
+<p>Đặc biệt, nếu muốn bổ sung thêm các đối số thì chúng ta không thể viết kiểu:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//a.c</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Hello &quot;</span>,<span class="string">&quot;cutepanda&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>thì sẽ có lỗi sau</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$gcc</span> a.c</span><br><span class="line">a.c: In <span class="keyword">function</span> ‘main’:</span><br><span class="line">a.c:4:16: warning: too many arguments <span class="keyword">for</span> format [-Wformat-extra-args]</span><br><span class="line">    4 |         <span class="built_in">printf</span>(<span class="string">&quot;Hello &quot;</span>, <span class="string">&quot;cutepanda&quot;</span>);</span><br></pre></td></tr></table></figure>
+<p>Với nhu cầu như thế, trong lập trình C/C++ có thể thay thế một số nội dung trong trong <em>format</em> bằng cách thêm một số <strong>format specifiers</strong>(định dạng được chỉ định, chỉ định ở đây có thể hiểu là cách hiển thị ra màn hình dạng số, chữ, hexa,…), các <em>format sepectifiers</em> này được bắt đầu bằng ký tự <code>%</code> và bổ sung đối số tiếp theo trong hàm <code>printf</code>.</p>
+<p>Một số <strong>format specifiers</strong>:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">specifies</th>
+<th style="text-align:left">Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">%d hoặc %i</td>
+<td style="text-align:left">Số thập phân có dấu(dấu - đó = )))</td>
+</tr>
+<tr>
+<td style="text-align:left">%u</td>
+<td style="text-align:left">Số thập phân không dấu</td>
+</tr>
+<tr>
+<td style="text-align:left">%x</td>
+<td style="text-align:left">Số dạng hexa</td>
+</tr>
+<tr>
+<td style="text-align:left">%s</td>
+<td style="text-align:left">Chuỗi ký tự</td>
+</tr>
+<tr>
+<td style="text-align:left">%p</td>
+<td style="text-align:left">Dạng một địa chỉ con trỏ (Có thêm 0x)</td>
+</tr>
+<tr>
+<td style="text-align:left">%n</td>
+<td style="text-align:left">Trường hợp đặc biệt, không in ra màn hình, đối số tương ứng với nó là một số không dấu, số ký tự được ghi vào stdout(&lt;=&gt;in ra màn hình) sẽ được lưu vào vị trí chỉ định(đối số của nó)</td>
+</tr>
+<tr>
+<td style="text-align:left">%%</td>
+<td style="text-align:left">Nếu có % cạnh phía sau % khác thì sẽ in ra 1 ký tự %</td>
+</tr>
+<tr>
+<td style="text-align:left">Và nhiều cái khác nữa</td>
+<td style="text-align:left">Hiccc</td>
+</tr>
+</tbody>
+</table>
+<p>Và có nhiều <code>flags</code> của hàm <code>printf</code> để định dạng cách in dữ liệu nữa, tuy nhiên phạm vi blog mình sẽ không nói sâu, mà sâu chưa chắc mình hiểu TT.</p>
+<p>Ví dụ cụ thể:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;Hello %s&quot;</span>, <span class="string">&quot;cutepanda&quot;</span>)</span><br></pre></td></tr></table></figure>
+<p>ở ví dụ này, <code>format</code> là <code>Hello %s</code>, <code>format specifiers</code> là <code>%s</code>, do có thêm một <code>fmspecifiers</code> nên ta phải thêm một đối số, đó là chuỗi <code>cutepanda</code>. Ở đây, có nghĩa là chương trình sẽ in ra chuỗi <code>Hello cutepanda</code>.</p>
+<p>Vậy, ** <em>lỗi format string xảy ra khi nào?</em> ** Đó là khi mà một hàm in mà ở đó, các <em>format</em> có chứa các <em>format specifiers</em> nhưng không đủ đối số tương ứng.<br>
+Ví dụ:</p>
+<figure class="highlight perl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">printf</span>(<span class="string">&quot;Hello %s %s&quot;</span>,<span class="string">&quot;cutepanda&quot;</span>); <span class="regexp">//</span>Lỗi. <span class="number">2</span> %s nhưng chỉ có một đối số.</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">&quot;Hello %x&quot;</span>); <span class="regexp">//</span>Lỗi. <span class="number">1</span> %x nhưng lại không có đối số.</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">&quot;%x&quot;</span>); <span class="regexp">//</span>Lỗi. %x nhưng lại không có đối số.</span><br><span class="line"><span class="keyword">printf</span>(<span class="string">&quot;%%x&quot;</span>); <span class="regexp">//</span>Không lỗi. Chương <span class="keyword">tr</span>ình in ra <span class="string">&quot;%x&quot;</span>.</span><br></pre></td></tr></table></figure>
+<p>Cuối cùng, làm sao có thể tận dụng lỗi format string, đó là khi bạn có thể kiểm soát được chuỗi <code>format</code> của hàm <code>printf</code>.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *name == vị trí có thể kiểm soát(nhập tên từ bàn phím, nhập tên từ file,...);</span><br><span class="line"><span class="built_in">printf</span>(name); =&gt; Đây là nơi mà chúng ta sẽ tận dụng khai thác lỗi.</span><br></pre></td></tr></table></figure>
+<h3 id="Impact">Impact</h3>
+<p>Khai thác lỗ hổng Format string có hai phần quà bạn có thể tận dụng, cần xuyên suốt trong quá trình tìm hiểu này.</p>
+<ul>
+<li><strong>Leak dữ liệu trên stack.</strong></li>
+<li><strong>Ghi đè vào một địa chỉ tùy ý, nếu có quyền ghi.</strong></li>
+</ul>
+<h2 id="Exploit">Exploit</h2>
+<h2 id="Reference">Reference</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/computer_fundamentals/computer_components.htm">Computer Components</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/memory-layout-of-c-program/">Memory layout of C Programe</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/File:Program_memory_layout.pdf">Programe Memory PDF</a></li>
+<li><a target="_blank" rel="noopener" href="https://ctf-wiki.org/">CTF Wiki</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/clover-toeic/p/3755401.html">C language function call stack (1)</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/clover-toeic/p/3756668.html">C language function call stack (2)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bluemoon.com.vn/books/taose.pdf">Nghệ thuật tận dụng lỗi phần mềm</a></li>
+<li><a target="_blank" rel="noopener" href="https://ctf101.org/binary-exploitation/what-is-the-stack/">The Stack</a></li>
+</ul>
 <p><em>Hôm nay hơi mệt, viết đến đây TT</em></p>
 
 
@@ -531,7 +644,7 @@ Thông thường, bộ nhớ của chương trình C bao gồm các section sau:
         <div id="toc" class="toc-article">
         <strong class="toc-title">Contents</strong>
         
-          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#TL-DR"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">TL;DR</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Kien-truc"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Kiến trúc</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#32bit-vs-64bit"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">32bit vs 64bit</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Memory-Layout"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">Memory Layout</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Function-call"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">Function call</span></a></li></ol></li></ol>
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#TL-DR"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">TL;DR</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Architect"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Architect</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#32bit-vs-64bit"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">32bit vs 64bit</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Memory-Layout"><span class="toc-nav-number">2.2.</span> <span class="toc-nav-text">Memory Layout</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Function-call"><span class="toc-nav-number">2.3.</span> <span class="toc-nav-text">Function call</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#FormatString-Vulnerablility"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">FormatString Vulnerablility</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Intro"><span class="toc-nav-number">3.1.</span> <span class="toc-nav-text">Intro</span></a></li><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Impact"><span class="toc-nav-number">3.2.</span> <span class="toc-nav-text">Impact</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Exploit"><span class="toc-nav-number">4.</span> <span class="toc-nav-text">Exploit</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Reference"><span class="toc-nav-number">5.</span> <span class="toc-nav-text">Reference</span></a></li></ol>
         
         </div>
       </aside>
