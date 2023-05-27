@@ -646,16 +646,16 @@ Ví dụ:</p>
     var gitalk = new Gitalk({
       clientID: 'cd28a74fba63c344b2d6',
       clientSecret: 'a75ded60ec13dbf4707ce34e9abae82dc6a93fa4',
-      repo: 'https://xiaopangd4.github.io',
+      repo: 'xiaopangd4.github.io',
       owner: 'xiaopangd4',
-      admin: 'xiaopangd4.github.io',
+      admin: 'xiaopangd4',
       id: 'Tue May 16 2023 18:33:35 GMT+0700', // Ensure uniqueness and length less than 50
       distractionFreeMode: false, // Facebook-like distraction free mode
       perPage: 10,
       pagerDirection: 'last',
       createIssueManually: false,
       language: 'en',
-      proxy: 'https://cors-anywhere.herokuapp.com/https://github.com/login/oauth/access_token'
+      proxy: ''
     });
     gitalk.render('gitalk-container');
 
