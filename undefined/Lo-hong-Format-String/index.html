@@ -373,7 +373,7 @@
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">2.6k</span> In Total
+              Words <span class="post-count">2.7k</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -450,7 +450,7 @@ Lưu ý: Trong chuỗi blog này, mình sẽ demo trên lập trình C/C++, hệ
 <p><em>flag.txt:</em></p>
 <figure class="highlight dust"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="language-xml">cutepanda</span><span class="template-variable">&#123;flag&#125;</span></span><br></pre></td></tr></table></figure>
 <p><em>Exploit:</em></p>
-<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input your name: </span><br><span class="line">%8<span class="variable">$p</span>.%9<span class="variable">$p</span></span><br><span class="line">0x646e617065747563.0xa7d67616c667b61</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./pandafmt</span><br><span class="line">Input your name: </span><br><span class="line">%8<span class="variable">$p</span>.%9<span class="variable">$p</span></span><br><span class="line">0x646e617065747563.0xa7d67616c667b61</span><br></pre></td></tr></table></figure>
 <p>Chúng ta có thể thấy giá trị <code>0x64 6e 61 70 65 74 75 63</code> và <code>0x0a 7d 67 61 6c 66 7b 61</code> khi chuyển sang giá trị ASCII là <code>cutepanda&#123;flag&#125;</code>. Đây chính là <code>flag</code> mà chúng ta cần tìm. Có thể sử dụng các công cụ online để chuyển đổi <a target="_blank" rel="noopener" href="https://kt.gy/tools.html#conv/">kt.gy</a> và công cụ mạnh hơn <a target="_blank" rel="noopener" href="https://gchq.github.io/CyberChef/">Cyber Chef</a>.<br>
 Như mình nói ban đầu, có thể mọi người đã làm được những bước như thế này, vấn đề giải thích kỹ tại sao lại như thế. Thì blog này dành cho bạn. Vì đây là blog đầu tiên của mình, không phải là lỗi Buffer Overflow, nên mình sẽ tổng hợp các kiến thức khác đi kèm.<br>
 Let’s go…</p>
@@ -458,7 +458,7 @@ Let’s go…</p>
 <h3 id="32bit-vs-64bit">32bit vs 64bit</h3>
 <p>Hiện tại trong các kiến trúc có 32bit(x86) và 64bit(x64). Muốn hiểu rõ hơn các thành phần, các bạn có thể tìm hiểu <a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/computer_fundamentals/computer_components.htm">tại đây</a>. Đại loại, với mỗi hệ thống, thì bộ xử lý, bộ nhớ, các thành phần khác sẽ xử lý tương ứng trên các đơn vị 32bit hay 64bit.</p>
 <h3 id="Memory-Layout">Memory Layout</h3>
-<p>Chúng ta đều biết, máy tính chỉ hoạt động qua ngôn ngữ máy, các bit <code>0</code> <code>1</code>, vì vậy để máy tính hiểu được chương trình, cần có quá trình biên dịch (<code>compiler</code>) quá trình này sẽ chuyển từ ngôn ngữ bậc cao(dễ viết, dễ đọc, dễ hiểu, chỗ này mình hơi lấn cấn ^^) sang ngôn ngữ bậc thấp hơn(ngôn ngữ máy). Vậy thì chương trình C của chúng ta cũng có trình biên dịch như thế(C -&gt; Assembly -&gt; 0110), cho nên nó cần có các vùng nhớ để thực hiện điều đó.<br>
+<p>Chúng ta đều biết, máy tính chỉ hoạt động qua ngôn ngữ máy, các bit <code>0</code> <code>1</code>, vì vậy để máy tính hiểu được chương trình, cần có quá trình biên dịch (<code>compiler</code>) quá trình này sẽ chuyển từ ngôn ngữ bậc cao(dễ viết, dễ đọc, dễ hiểu, chỗ này mình hơi lấn cấn ^^) sang ngôn ngữ bậc thấp hơn(ngôn ngữ máy). Vậy thì chương trình C của chúng ta cũng có trình biên dịch như thế(C -&gt; … -&gt; Assembly -&gt; … -&gt; 0110), cho nên nó cần có các vùng nhớ để thực hiện điều đó.<br>
 Thông thường, bộ nhớ của chương trình C bao gồm các section sau:</p>
 <table>
 <thead>
@@ -497,7 +497,7 @@ Thông thường, bộ nhớ của chương trình C bao gồm các section sau:
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> a = <span class="number">0</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, &amp;a); <span class="comment">// = 0x658741 địa chỉ</span></span><br><span class="line"><span class="built_in">printf</span>(<span class="string">&quot;%d&quot;</span>, a); <span class="comment">// = 0 giá trị</span></span><br></pre></td></tr></table></figure>
 <h3 id="Function-call">Function call</h3>
 <p>Quá trình chương trình thực hiện, sẽ gọi các hàm liên tục (<code>call</code>), sau đó lại quay trở về tại thời điểm trước khi gọi hàm(<code>return</code>). Cùng nhìn lại <em>fmt.c</em> tại <code>main</code> chương trình gọi 2 hàm là <code>ignore</code> và <code>vuln</code>. Cái này ai từng thực hiện về lỗ hổng Buffer Overflow sẽ hiểu rõ. Đại khái nếu chương trình ở <code>main</code> khi chạy đoạn <code>ignore()</code> thì chương trình sẽ sử dụng lệnh <code>call hàm ignore</code>(giai đoạn này sẽ phải cấp phát một vùng nhớ để lưu các biến, EBP, return address,… và vùng nhớ này sẽ có địa chỉa thấp hơn vùng địa chỉ <code>main</code>) sau khi chạy xong hàm <code>ignore</code> thì chương trình phải về hàm <code>main</code> để thực hiện tiếp hàm <code>vuln</code>, giai đoạn trở về thông qua địa chỉ trả về <code>return address</code>.</p>
-<p>Trong chương trình sẽ có nhiều hàm khác nhau, mỗi phân vùng được cấp cho một hàm, khi hàm chưa kết thúc, và hàm giữ liên tục phân vùng này trên stack thì gọi là StackFrame.</p>
+<p>Trong chương trình sẽ có nhiều hàm khác nhau, mỗi phân vùng trên stack được cấp cho một hàm, khi hàm chưa kết thúc, và hàm giữ liên tục phân vùng này trên stack thì gọi là StackFrame.</p>
 <p><strong><em>x86</em></strong><br>
 Trong hệ điều hành 32bit, StackFrame khi một function được gọi sẽ như sau</p>
 <p>[Highaddress]<br>
@@ -602,8 +602,12 @@ Ví dụ:</p>
 </ul>
 <h2 id="Exploit">Exploit</h2>
 <h3 id="Leakable-data">Leakable data</h3>
-<p>Như ví dụ đầu blog, khi chạy chương trình, <code>./pandafmt</code>, về đúng nguyên tắc của lập trình, chúng ta không thể đọc được nội dung của <code>flag.txt</code>. Tuy nhiên, chúng ta đã đọc được nội dung của <code>flag.txt</code> thông qua lỗ hổng FormatString. Vậy, nguyên lý nào khiến chúng ta có thể làm điều đó?</p>
-<p><em>Hôm nay hơi mệt, viết đến đây TT</em></p>
+<p>Như ví dụ đầu blog, khi chạy chương trình, <code>./pandafmt</code>, về đúng nguyên tắc của lập trình, chúng ta không thể đọc được nội dung của <code>flag.txt</code>. Tuy nhiên, chúng ta đã đọc được nội dung của <code>flag.txt</code> thông qua lỗ hổng FormatString. Vậy, nguyên lý nào khiến chúng ta có thể làm điều đó?<br>
+Rất vui khi được các bạn chia sẻ cho những bạn khác, từ nguồn này.</p>
+<blockquote>
+<p>Bye, mình là Cute Panda &lt;3</p>
+</blockquote>
+<p><strong>End part1.</strong></p>
 <h2 id="Reference">Reference</h2>
 <ul>
 <li><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/computer_fundamentals/computer_components.htm">Computer Components</a></li>
