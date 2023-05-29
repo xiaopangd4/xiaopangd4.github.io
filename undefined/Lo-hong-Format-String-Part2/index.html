@@ -110,10 +110,10 @@
   <!--[if lt IE 9]> <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script> <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script> <![endif]-->
 
   <!-- ga & ba script hoook -->
-  <link rel="canonical" href="http://example.com/archives/2023/">
+  <link rel="canonical" href="http://example.com/undefined/Lo-hong-Format-String-Part2/">
   <title>
     
-      No paint | No game
+      Lỗ hổng Format String - Part 2 - No paint | No game
     
   </title>
 <meta name="generator" content="Hexo 5.4.2"></head>
@@ -329,9 +329,9 @@
     }
 
     header.intro-header {
-       /*page*/
-        background-image: var(--intro-header-background-image-url-page);
-        /* background-image: url('/img/header_img/archive_bg2.jpg'); */
+       /*post*/
+        background-image: var(--intro-header-background-image-url-post);
+        /* background-image: url(''); */
       
     }
 
@@ -349,10 +349,44 @@
       <div class="row">
         <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
           
-          <div class="site-heading">
-            <h1>Xiao Pangd4</h1>
-            <!--<hr class="small">-->
-            <span class="subheading">Cute panda</span>
+          <div class="post-heading">
+            <div class="tags">
+              
+              <a class="tag" href="/tags/#FormatString" title="FormatString">FormatString</a>
+              
+              <a class="tag" href="/tags/#Pwn" title="Pwn">Pwn</a>
+              
+            </div>
+            <h1>Lỗ hổng Format String - Part 2</h1>
+            <h2 class="subheading"></h2>
+            <span class="meta">
+              Posted by Xiao Panda on
+              2023-05-29
+            </span>
+
+
+            
+            <!-- WordCount start -->
+            <div class="blank_box"></div>
+            <span class="meta">
+              Estimated Reading Time <span class="post-count">1</span> Minutes
+            </span>
+            <div class="blank_box"></div>
+            <span class="meta">
+              Words <span class="post-count">259</span> In Total
+            </span>
+            <div class="blank_box"></div>
+            <!-- WordCount end -->
+            
+            
+            <!-- 不蒜子统计 start -->
+            <span class="meta" id="busuanzi_container_page_pv">
+              Viewed <span id="busuanzi_value_page_pv"><i class="fa fa-spinner fa-spin"></i></span> Times
+            </span>
+            <!-- 不蒜子统计 end -->
+            
+
+
           </div>
           
         </div>
@@ -393,204 +427,215 @@
 	Friends Blog、
 	anchorjs、
 	) -->
-		<!-- Main Content -->
-<div class="container">
-  <div class="row">
-    
+		<!-- Modify by Yu-Hsuan Yen -->
+<!-- Post Content -->
+<article>
+  <div class="container">
+    <div class="row">
+      <!-- Post Container -->
+      <div class="col-lg-8 col-lg-offset-1 col-md-10 col-md-offset-1 post-container">
 
-    <!-- USE SIDEBAR -->
-    <!-- Post Container -->
-    <div class="
-                col-lg-8 col-lg-offset-1
-                col-md-8 col-md-offset-1
-                col-sm-12
-                col-xs-12
-                post-container
-            ">
+        <h2 id="TL-DR">TL;DR</h2>
+<p>Ở blog đầu tiên <a target="_blank" rel="noopener" href="https://xiaopangd4.github.io/undefined/Lo-hong-Format-String/">Part 1</a> chúng ta đã hiểu về kiến trúc, cơ chế hoạt động và nguyên tắc mắc lỗi dẫn đến Format String. Cuối <a target="_blank" rel="noopener" href="https://xiaopangd4.github.io/undefined/Lo-hong-Format-String/">Part 1</a> mình đã đặt câu hỏi, sao chúng ta có thể làm được điều đó? Sao có thể đọc được nội dung file <code>flag.txt</code>. Để giải quyết được, mình sẽ giải đáp thắc mắc cho các bạn trong Part 2 này.<br>
+Đầu tiên, hãy nhớ lại hai cái tác động của lỗ hổng này.<br>
+Khai thác lỗ hổng Format string có hai phần quà bạn có thể tận dụng, cần xuyên suốt trong quá trình tìm hiểu này.</p>
+<ul>
+<li><strong>Leak dữ liệu trên stack.</strong></li>
+<li><strong>Ghi đè vào một địa chỉ tùy ý, nếu có quyền ghi.</strong></li>
+</ul>
+<blockquote>
+<p><em>Hello, mình là Cute Panda!</em></p>
+</blockquote>
+<h2 id="Exploit">Exploit</h2>
+<h3 id="Leakable-data">Leakable data</h3>
+<p>Trước tiên, để khai thác được lỗ hổng, chúng ta lại phải xem lại cách thức hoạt động của các hàm <code>printf</code>.</p>
+<h2 id="Reference">Reference</h2>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.tutorialspoint.com/computer_fundamentals/computer_components.htm">Computer Components</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.geeksforgeeks.org/memory-layout-of-c-program/">Memory layout of C Programe</a></li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/File:Program_memory_layout.pdf">Programe Memory PDF</a></li>
+<li><a target="_blank" rel="noopener" href="https://ctf-wiki.org/">CTF Wiki</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/clover-toeic/p/3755401.html">C language function call stack (1)</a></li>
+<li><a target="_blank" rel="noopener" href="http://www.cnblogs.com/clover-toeic/p/3756668.html">C language function call stack (2)</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bluemoon.com.vn/books/taose.pdf">Nghệ thuật tận dụng lỗi phần mềm</a></li>
+<li><a target="_blank" rel="noopener" href="https://ctf101.org/binary-exploitation/what-is-the-stack/">The Stack</a></li>
+</ul>
 
-      <!-- Main Content -->
-<div class="container">
-  <div class="row">
-    <div class="col-lg-8 col-lg-offset-0 col-md-10 col-md-offset-1">
-      <!-- 归档列表 -->
 
-      
-
-      <!-- 归档列表 -->
-      
-      <div class="one-tag-list">
-        <span class="fa fa-calendar-times-o listing-seperator" id="2023">
-          <span class="tag-text">2023</span>
-        </span>
-        <ul>
+        <hr>
+        <!-- Pager -->
+        <ul class="pager">
           
-          <li>
-            05-29
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/undefined/Lo-hong-Format-String-Part2/" style="color: #0085a1">
-              <span>
-                Lỗ hổng Format String - Part 2
-                
-                -- undefined
-                
-              </span>
-            </a>
-          </li>
           
-          <li>
-            05-16
-            <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-            <a href="/undefined/Lo-hong-Format-String/" style="color: #0085a1">
-              <span>
-                Lỗ hổng Format String - Part 1
-                
-                -- undefined
-                
-              </span>
-            </a>
+          <li class="next">
+            <a href="/undefined/Lo-hong-Format-String/" data-toggle="tooltip" data-placement="top" title="Lỗ hổng Format String - Part 1">Next Post &rarr;</a>
           </li>
           
         </ul>
+
+        
+
+        
+        <hr>
+
+        <!-- comments start -->
+        <!-- 1. gitalk comment -->
+
+  <!-- gitalk start -->
+  <!-- Docs:https://github.com/gitalk/gitalk/blob/master/readme-cn.md -->
+
+  <div id="gitalk-container"></div>
+
+  
+    <!-- <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.js"></script> -->
+    <script src="/js/comment/gitalk.js"></script>
+  
+
+  <script>
+    var gitalk = new Gitalk({
+      clientID: 'cd28a74fba63c344b2d6',
+      clientSecret: 'a75ded60ec13dbf4707ce34e9abae82dc6a93fa4',
+      repo: 'xiaopangd4.github.io',
+      owner: 'xiaopangd4',
+      admin: 'xiaopangd4',
+      id: 'Mon May 29 2023 11:23:40 GMT+0700', // Ensure uniqueness and length less than 50
+      distractionFreeMode: false, // Facebook-like distraction free mode
+      perPage: 10,
+      pagerDirection: 'last',
+      createIssueManually: false,
+      language: 'en',
+      proxy: ''
+    });
+    gitalk.render('gitalk-container');
+
+    var gtFolded = () => {
+      setTimeout(function () {
+        let markdownBody = document.getElementsByClassName("markdown-body");
+        let list = Array.from(markdownBody);
+        list.forEach(item => {
+          if (item.clientHeight > 250) {
+            item.classList.add('gt-comment-body-folded');
+            item.style.maxHeight = '250px';
+            item.title = 'Click to Expand';
+            item.onclick = function () {
+              item.classList.remove('gt-comment-body-folded');
+              item.style.maxHeight = '';
+              item.title = '';
+              item.onclick = null;
+            };
+          }
+        })
+      }, 800);
+    }
+  </script>
+
+  <!-- gitalk end -->
+
+
+<!-- 2. gitment comment -->
+
+
+<!-- 3. disqus comment -->
+
+
+        <!-- comments end -->
+        <hr>
+
       </div>
-      
-    </div>
-  </div>
-</div>
 
+      <!-- Catalog: Tabe of Content -->
+      <!-- Table of Contents -->
 
-      <!-- 如果开启评论功能 -->
-      
-    </div>
-
-    <!-- Sidebar Container -->
-<div class="
-    col-lg-3 col-lg-offset-0
-    col-md-3 col-md-offset-0
-    col-sm-12
-    col-xs-12
-    sidebar-container
-">
     
+      <aside id="sidebar">
+        <div id="toc" class="toc-article">
+        <strong class="toc-title">Contents</strong>
+        
+          <ol class="toc-nav"><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#TL-DR"><span class="toc-nav-number">1.</span> <span class="toc-nav-text">TL;DR</span></a></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Exploit"><span class="toc-nav-number">2.</span> <span class="toc-nav-text">Exploit</span></a><ol class="toc-nav-child"><li class="toc-nav-item toc-nav-level-3"><a class="toc-nav-link" href="#Leakable-data"><span class="toc-nav-number">2.1.</span> <span class="toc-nav-text">Leakable data</span></a></li></ol></li><li class="toc-nav-item toc-nav-level-2"><a class="toc-nav-link" href="#Reference"><span class="toc-nav-number">3.</span> <span class="toc-nav-text">Reference</span></a></li></ol>
+        
+        </div>
+      </aside>
+    
+
+
+
+      <!-- Sidebar Container -->
+      <div class="
+                col-lg-8 col-lg-offset-1
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
         <!-- Featured Tags -->
+        
+        <section>
+          <!-- no hr -->
+          <h5>
+            <a href="/tags/">FEATURED TAGS</a>
+          </h5>
+          <div class="tags">
+            
+            <a class="tag" href="/tags/#FormatString" title="FormatString">FormatString</a>
+            
+            <a class="tag" href="/tags/#Pwn" title="Pwn">Pwn</a>
+            
+          </div>
+        </section>
+        
 
-<section>
-  <h5><a href="/tags/">FEATURED TAGS</a></h5>
-  <div class="tags">
-    
-    
-    <a href="/tags/#FormatString" title="FormatString" rel="2">FormatString</a>
-    
-    
-    
-    <a href="/tags/#Pwn" title="Pwn" rel="2">Pwn</a>
-    
-    
+        <!-- Friends Blog -->
+        
+      </div>
+    </div>
   </div>
-</section>
+</article>
 
 
-        <hr>
-    
-        <!-- Short About -->
-<section class="visible-md visible-lg">
-  <h5><a href="/about/">ABOUT ME</a></h5>
-  <div class="short-about">
 
-    
+<!-- anchorjs start -->
+<!-- async load function -->
+<!-- anchor-js, Doc:http://bryanbraun.github.io/anchorjs/ -->
+<script type="text/javascript">
+  // async load function
+  function async (u, c) {
+    var d = document,
+      t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) {
+      o.addEventListener('load', function(e) {
+        c(null, e);
+      }, false);
+    }
+    s.parentNode.insertBefore(o, s);
+  };
+</script>
+<script type="text/javascript">
+  //anchor-js, Doc:http://bryanbraun.github.io/anchorjs/
+  async ("https://cdn.bootcss.com/anchor-js/1.1.1/anchor.min.js", function() {
+    anchors.options = {
+      visible: 'hover',
+      placement: 'left',
+      // icon: 'ℬ'
+      icon: '❡'
+    };
+    anchors.add().remove('.intro-header h1').remove('.subheading').remove('.sidebar-container h5');
+  });
+</script>
+<style>
+  /* place left on bigger screen */
+  @media all and (min-width: 800px) {
+    .anchorjs-link {
+      position: absolute;
+      left: -0.75em;
+      font-size: 1.1em;
+      margin-top: -0.1em;
+    }
+  }
+</style>
 
-    
-    <p>No paint | No game</p>
-    
+<!-- anchorjs end -->
 
-    <!-- SNS Link -->
-    <ul class="list-inline">
-      
-
-      
-      <li>
-        <a target="_blank" href="https://github.com/xiaopangd4">
-          <span class="fa-stack fa-lg">
-            <i class="fa fa-circle fa-stack-2x"></i>
-            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
-          </span>
-        </a>
-      </li>
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-    </ul>
-  </div>
-</section>
-
-        <hr>
-    
-        <!-- RECENT POSTS -->
-
-<h5><a href="/">RECENT POSTS</a></h5>
-<div class="widget">
-  <ul>
-    
-    <a href="../../undefined/Lo-hong-Format-String-Part2/">
-      <li>Lỗ hổng Format String - Part 2</li>
-    </a>
-    
-    <a href="../../undefined/Lo-hong-Format-String/">
-      <li>Lỗ hổng Format String - Part 1</li>
-    </a>
-    
-  </ul>
-</div>
-
-
-        <hr>
-    
-        <!-- Archives -->
-
-<h5><a href="/archives/">archives</a></h5>
-<div class="widget">
-  <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="05/">May 2023</a><span class="archive-list-count">2</span></li></ul>
-</div>
-
-
-        <hr>
-    
-        <!-- Categories -->
-
-<h5><a href="/categories/">categories</a></h5>
-<div class="widget">
-  <ul>
-    
-    <a href="/categories/#Pwn">
-      <li>Pwn</li>
-    </a>
-    
-    <a href="/categories/#FormatString">
-      <li>FormatString</li>
-    </a>
-    
-  </ul>
-</div>
-
-
-        <hr>
-    
-</div>
-
-
-    
-  </div>
-</div>
 
 
 		<!-- Footer (contains ThemeColor、viewer) -->
