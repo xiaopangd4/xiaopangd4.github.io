@@ -369,11 +369,11 @@
             <!-- WordCount start -->
             <div class="blank_box"></div>
             <span class="meta">
-              Estimated Reading Time <span class="post-count">1</span> Minutes
+              Estimated Reading Time <span class="post-count">2</span> Minutes
             </span>
             <div class="blank_box"></div>
             <span class="meta">
-              Words <span class="post-count">288</span> In Total
+              Words <span class="post-count">435</span> In Total
             </span>
             <div class="blank_box"></div>
             <!-- WordCount end -->
@@ -448,7 +448,12 @@ Khai thác lỗ hổng Format string có hai phần quà bạn có thể tận d
 </blockquote>
 <h2 id="Exploit">Exploit</h2>
 <h3 id="Leakable-data">Leakable data</h3>
-<p>Trước tiên, để khai thác được lỗ hổng, chúng ta lại phải xem lại cách thức hoạt động của các hàm <code>printf</code>.</p>
+<p><strong>32bit</strong><br>
+Trước tiên, để khai thác được lỗ hổng, chúng ta lại phải xem lại cách thức hoạt động của các hàm <code>printf</code>.</p>
+<p>Quay trở lại với ví dụ <code>fmt.c</code> ở Part1. Chúng ta thấy như sau:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span>&#123;</span><br><span class="line">ignore();</span><br><span class="line">vuln();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>Khi chương trình chạy, sẽ phải cấp phát vùng nhớ trên stack lần lượt cho các hàm <code>main</code>, hàm <code>ignore</code>, hàm <code>vuln</code>, và trong mỗi hàm lại có thêm các hàm như <code>setvbuf</code>, <code>fopen</code>, <code>puts</code>, <code>exit</code>, <code>scanf</code>, … có thể thấy rõ ràng trong chương trình C của chúng ta.</p>
+<p>Hãy nhớ lại và tưởng tượng rằng, <code>memory layout</code> và <code>function call</code> ở Part1. Chúng ta sẽ thấy một phân vùng cấp cho chương trình trên <code>stack</code> như hình phía dưới.</p>
 <blockquote>
 <p>Vì vấn đề cơm áo gạo tiền, mình sẽ hoàn thành bài này khi đủ cơm áo gạo tiền.</p>
 </blockquote>
@@ -1101,20 +1106,5 @@ start: '#bbbbee', end: '#0085a1' } }; $('#tag_cloud a').tagcloud(); }) } </scrip
 
 
 		
-	<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-        tex2jax: {
-            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
-            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
-            processEscapes: true
-        }
-    });
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax();
-        for (var i = 0; i < all.length; ++i)
-            all[i].SourceElement().parentNode.className += ' has-jax';
-    });
-</script>
-<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-</body>
+	</body>
 </html>
